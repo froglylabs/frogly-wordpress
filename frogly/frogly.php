@@ -3,7 +3,7 @@
  * Plugin Name:       Frogly
  * Plugin URI:        https://frogly.ai
  * Description:       Catches automated intruders on your site and leads them away before they reach anything real. Paste your Frogly install line once and you are done.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Frogly
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FROGLY_VERSION', '1.0.0' );
+define( 'FROGLY_VERSION', '1.0.1' );
 define( 'FROGLY_OPTION', 'frogly_site_id' );
 define( 'FROGLY_WIDGET_URL', 'https://cdn.frogly.ai/w/core.v5.js' );
 define( 'FROGLY_WIDGET_SRI', 'sha384-5PrNyFpjR+GGOLhFy+XWlvP9vJtqRDKWrSyGVuWYl907zw26TU0PSCod12iTAUdu' );
@@ -48,8 +48,8 @@ function frogly_is_site_id( $value ) {
 /**
  * Pull the site ID out of whatever the operator pasted.
  *
- * Accepts either the bare site ID or the full install line copied from the
- * Frogly console (the ID is the data-cfg attribute).
+ * Accepts the bare site ID, the current install line (the ID is the data-cfg
+ * attribute) or the older per-site line (the ID is the script file name).
  *
  * @param string $input Raw pasted text.
  * @return string Site ID, or empty string if none was found.
@@ -62,6 +62,10 @@ function frogly_extract_site_id( $input ) {
 	}
 
 	if ( preg_match( '/data-cfg\s*=\s*["\']?([0-9a-f-]{36})["\']?/', $input, $m ) && frogly_is_site_id( $m[1] ) ) {
+		return $m[1];
+	}
+
+	if ( preg_match( '#cdn\.frogly\.ai/w/([0-9a-f-]{36})\.js#', $input, $m ) && frogly_is_site_id( $m[1] ) ) {
 		return $m[1];
 	}
 
@@ -88,7 +92,7 @@ function frogly_sanitize_site_id( $input ) {
 			add_settings_error(
 				FROGLY_OPTION,
 				'frogly_invalid',
-				__( 'That does not look like a Frogly install line. Copy the whole line from the Install button in your Frogly console and paste it here.', 'frogly' ),
+				__( 'That does not look like a Frogly install line. Copy the whole line from your Frogly console (the Copy button next to Install line) and paste it here.', 'frogly' ),
 				'error'
 			);
 		}
@@ -210,7 +214,7 @@ function frogly_render_settings_page() {
 					);
 					?>
 				</li>
-				<li><?php esc_html_e( 'Click Install and copy the line it shows you.', 'frogly' ); ?></li>
+				<li><?php esc_html_e( 'Copy the install line shown for the site (the Copy button next to it).', 'frogly' ); ?></li>
 				<li><?php esc_html_e( 'Paste it below and save.', 'frogly' ); ?></li>
 			</ol>
 		<?php endif; ?>
@@ -228,7 +232,7 @@ function frogly_render_settings_page() {
 							name="<?php echo esc_attr( FROGLY_OPTION ); ?>"
 							class="large-text code"
 							rows="3"
-							placeholder="<?php esc_attr_e( 'Paste the whole line from the Install button, or just the site ID', 'frogly' ); ?>"
+							placeholder="<?php esc_attr_e( 'Paste the whole install line, or just the site ID', 'frogly' ); ?>"
 						><?php echo esc_textarea( $site_id ); ?></textarea>
 						<p class="description">
 							<?php esc_html_e( 'Only the site ID is kept. Clear the box and save to turn Frogly off.', 'frogly' ); ?>

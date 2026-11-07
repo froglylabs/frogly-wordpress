@@ -4,7 +4,7 @@ Tags: bot detection, security, bots, ai agents, decoy
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,7 +43,7 @@ Frogly privacy policy: [https://frogly.ai/privacy](https://frogly.ai/privacy)
 
 1. Install and activate the plugin.
 2. Sign in at [frogly.ai/app](https://frogly.ai/app) (or sign up, it is free) and add your site.
-3. Click Install in the console and copy the line it shows you.
+3. Copy the install line the console shows for your site.
 4. In WordPress go to Settings > Frogly, paste the line, and click Turn Frogly on.
 5. Back in your console, the site card should read "Frogly is watching yourdomain.com" within a minute or so. Click Poke it to watch a test catch arrive.
 
@@ -84,6 +84,9 @@ Yes. The plugin only places the line for you so you do not have to edit your the
 In your console at [frogly.ai/app](https://frogly.ai/app).
 
 == Changelog ==
+
+= 1.0.1 =
+* Accepts every form of the install line the console has shown, old or new. Clearer wording on the settings page.
 
 = 1.0.0 =
 * First release. Settings page, one install line, pinned widget.

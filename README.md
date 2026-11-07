@@ -8,7 +8,7 @@ The plugin does one job: it prints the pinned Frogly install line on every publi
 
 1. Download the latest `frogly.zip` from [Releases](../../releases) and upload it under Plugins > Add New > Upload Plugin, then activate it.
 2. Sign in at [frogly.ai/app](https://frogly.ai/app) (or sign up, it is free) and add your site.
-3. Click Install in the console and copy the line it shows you.
+3. Copy the install line the console shows for your site.
 4. In WordPress go to Settings > Frogly, paste the line, and click Turn Frogly on.
 
 To turn it off, clear the box and save, or deactivate the plugin. Deleting the plugin removes the saved site ID.
